@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Anya's Adventure</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a0a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Georgia', serif;
+    }
+    h1 {
+      color: #f9d6ff;
+      font-size: 28px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #d080ff;
+      letter-spacing: 2px;
+    }
+    canvas {
+      border: 3px solid #9b59d0;
+      border-radius: 8px;
+      box-shadow: 0 0 30px #7c2dc8aa;
+    }
+    #controls {
+      color: #c9a8f0;
+      font-size: 13px;
+      margin-top: 10px;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <h1>✨ Anya's Adventure ✨</h1>
+  <canvas id="gameCanvas" width="800" height="500"></canvas>
+  <div id="controls">Arrow keys or WASD to move &nbsp;|&nbsp; Explore the garden!</div>
+  <script src="src/game.js"></script>
+</body>
+</html>
