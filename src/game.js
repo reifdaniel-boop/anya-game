@@ -6,6 +6,9 @@ const ctx    = canvas.getContext('2d');
 const W = canvas.width;   // 800
 const H = canvas.height;  // 500
 
+// ── Castle interior constants (needed at startup) ─────────────
+const CEIL_H = 90, WALL_L = 68, WALL_R = W - 68;
+
 // ── Input ────────────────────────────────────────────────────
 const keys = {}, justPressed = {};
 window.addEventListener('keydown', e => { if (!keys[e.key]) justPressed[e.key] = true; keys[e.key] = true; });
@@ -87,7 +90,6 @@ const rng = (a, b) => a + Math.random() * (b - a);
 const gardenFlowers = [];
 for (let i = 0; i < 160; i++) {
   const wx = rng(0, WORLD_W);
-  const inLake = wx > 80 && wx < 580 && true; // lake is purely visual, flowers on shore ok
   const onPath = wx > 1290 && wx < 1410;
   if (onPath) continue;
   gardenFlowers.push({
@@ -129,11 +131,6 @@ function showDialog(msg, dur = 200) { dialog = msg; dialogTimer = dur; }
 
 let tick = 0;
 
-// ── Library particles (floating book dust) ────────────────────
-const bookDust = Array.from({length: 12}, () => ({
-  x: 150 + rng(0, 500), y: CEIL_H + 20 + rng(0, 100),  // reassigned after CEIL_H defined
-  phase: rng(0, Math.PI*2), speed: 0.3 + rng(0,0.4),
-}));
 
 // ── Ballroom confetti ─────────────────────────────────────────
 const confetti = Array.from({length: 20}, () => ({
@@ -381,7 +378,7 @@ function drawButterflyMeadow() {
     ctx.beginPath(); ctx.ellipse(rx-5,ry-4,10,6,0,0,Math.PI*2); ctx.fill();
   });
   // Butterflies
-  butterflies.forEach((b,i) => {
+  butterflies.forEach(b => {
     const px = b.bx + Math.sin(tick*b.speed*.015+b.phase)*b.range;
     const py = b.by + Math.cos(tick*b.speed*.012+b.phase)*20;
     const wing = Math.abs(Math.sin(tick*0.12+b.phase))*18;
@@ -462,10 +459,6 @@ function drawWorldSigns() {
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-//  CASTLE INTERIOR CONSTANTS
-// ═══════════════════════════════════════════════════════════
-const CEIL_H = 90, WALL_L = 68, WALL_R = W - 68;
 
 // ─── Shared castle structure ──────────────────────────────
 function drawCastleBase(floorStyle) {
